@@ -1,0 +1,19 @@
+$('#country_dropdown').change(function(){
+    var countryId = $(this).val();
+    $('#city_dropdown').attr('disabled', false);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: '/get/city/list',
+        data: {countryId:countryId},
+        success:function(data){
+            $('#city_dropdown').html(data);
+        }
+    });
+});
+$('#city_dropdown').select2();
